@@ -13,7 +13,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-12">
-              <table id="example2"
+              <table id="transaction"
                      class="table table-bordered table-hover">
                 <thead>
                   <tr>
@@ -26,14 +26,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                  @foreach ($transactions as $transaction)
+                    <tr>
+                      <td>{{ $transaction->id }}</td>
+                      <td>{{ $transaction->package->name }}</td>
+                      <td>{{ $transaction->user->name }}</td>
+                      <td>{{ $transaction->amount }}</td>
+                      <td>{{ $transaction->status }}</td>
+                      <td></td>
+                    </tr>
+                  @endforeach
+
                 </tbody>
               </table>
             </div>
@@ -56,7 +59,7 @@
   </script>
 
   <script>
-    $('#movie').DataTable({
+    $('#transaction').DataTable({
       dom: 'Bfrtip',
       buttons: [
         'copyHtml5',

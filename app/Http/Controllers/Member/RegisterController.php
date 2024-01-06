@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
 
-class TransactionController extends Controller
+class RegisterController extends Controller
 {
   /**
    * Display a listing of the resource.
@@ -16,11 +15,7 @@ class TransactionController extends Controller
   public function index()
   {
     //
-    $transactions = Transaction::with([
-      'package', 'user'
-    ])->get();
-    // dd($transaction);
-    return view('admin.transactions.index', ['transactions' => $transactions]);
+    return view('member.register');
   }
 
   /**
@@ -42,6 +37,12 @@ class TransactionController extends Controller
   public function store(Request $request)
   {
     //
+    $request->validate([
+      'name' => 'required',
+      'phone_number' => 'required',
+      'email' => 'required|email',
+      'password' => 'required|min:6'
+    ]);
   }
 
   /**

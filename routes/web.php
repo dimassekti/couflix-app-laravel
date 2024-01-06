@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\MovieController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Member\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('admin/login', [LoginController::class, 'index'])->name('admin.login');
+Route::post('admin/login', [LoginController::class, 'authenticate'])->name('admin.login.authenticate');
 
 // prefix generate /admin pada url
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
   Route::view('/', 'admin.dashboard')->name('admin.dashboard');
 
-  Route::group(['prefix' => 'transaction'], function () {
+  Route::get('logout', [LoginController::class, 'logout'])->name('admin.logout');
 
+  Route::group(['prefix' => 'transaction'], function () {
     Route::get('/', [TransactionController::class, 'index'])->name('admin.transaction.index');
   });
 
@@ -36,6 +40,10 @@ Route::group(['prefix' => 'admin'], function () {
   });
 });
 
+Route::view('/', 'index');
+
+Route::get('/register', [RegisterController::class, 'index'])->name('member.register');
+Route::post('/register', [RegisterController::class, 'store'])->name('member.register.store');
 // Route::get('/', function () {
 //     return view('welcome');
 // });

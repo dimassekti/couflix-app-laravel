@@ -33,7 +33,7 @@
                  width="80"
                  alt="">
           </div>
-          <a href="dashboard-movie_details.html"
+          <a href="{{ route('member.movie.detail', $movie->id) }}"
              class="inset-0 absolute z-50"></a>
         </div>
       @endforeach

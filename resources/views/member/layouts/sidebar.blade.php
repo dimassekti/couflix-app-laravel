@@ -6,7 +6,7 @@
             alt="">
      </a>
      <div class="links flex flex-col mt-16 gap-2">
-       <a href="dashboard.html"
+       <a href="{{ route('member.dashboard') }}"
           class="side-link active">
          <svg width="24"
               height="24"
@@ -160,7 +160,7 @@
          </svg>
          Account Settings
        </a>
-       <a href="!#"
+       <a href="{{ route('member.logout') }}"
           class="side-link">
          <svg width="24"
               height="24"

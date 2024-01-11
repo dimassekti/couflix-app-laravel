@@ -81,7 +81,7 @@
                  class="nav-link-item">Genre</a>
               <a href="#!"
                  class="nav-link-item">Featured</a>
-              <a href="pricing.html"
+              <a href="{{ route('pricing') }}"
                  class="nav-link-item">Pricing</a>
             </div>
             <a href="/"

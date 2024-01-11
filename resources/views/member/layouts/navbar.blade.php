@@ -7,7 +7,7 @@
     <p class="mb-0 text-stream-gray text-base">@yield('title-description')</p>
   </div>
   <div class="flex items-center gap-[26px]">
-    <span class="text-white text-base">Welcome, Miranda Nur</span>
+    <span class="text-white text-base">Welcome, {{ Auth::user()->name }}</span>
     <!-- user avatar -->
     <div class="collapsible-dropdown flex flex-col gap-2 relative">
       <a href="#!"
@@ -23,7 +23,7 @@
            class="transition-all hover:bg-sky-100 p-4">Watch</a>
         <a href="#!"
            class="transition-all hover:bg-sky-100 p-4">Settings</a>
-        <a href="sign_in.html"
+        <a href="{{ route('member.logout') }}"
            class="transition-all hover:bg-sky-100 p-4">Sign Out</a>
       </div>
     </div>

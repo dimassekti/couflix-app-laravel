@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -43,6 +45,25 @@ class RegisterController extends Controller
       'email' => 'required|email',
       'password' => 'required|min:6'
     ]);
+
+    $data = $request->except("_token");
+
+    // validasi email duplikat
+    $isEmailExists = User::where('email', $request->email)->exists();
+
+    if ($isEmailExists) {
+      return back()->withErrors([
+        'email' => 'This email is already exists'
+      ])->withInput();
+    }
+
+    $data['role'] = 'member';
+    $data['password'] = Hash::make($request->password);
+
+    User::create($data);
+
+    // return back();
+    return redirect()->route('member.login');
   }
 
   /**

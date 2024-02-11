@@ -4,47 +4,12 @@ namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
 use App\Models\Movie;
+use App\Models\UserPremium;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class MovieController extends Controller
 {
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function index()
-  {
-    //
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function create()
-  {
-    //
-  }
-
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
-  public function store(Request $request)
-  {
-    //
-  }
-
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
   public function show($id)
   {
     $movie = Movie::find($id);
@@ -54,37 +19,23 @@ class MovieController extends Controller
     ]);
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function edit($id)
+  public function watch($id)
   {
-    //
-  }
+    $userId = auth()->user()->id;
+    $userPremium = UserPremium::where('user_id', $userId)->first();
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, $id)
-  {
-    //
-  }
+    // check subscriptionnya valid atau tidak
+    if ($userPremium) {
+      $endOfSubscription = $userPremium->end_of_subscription;
+      $date = Carbon::createFromFormat('Y-m-d', $endOfSubscription);
+      $isValidSubscription = $date->greaterThan(now());
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function destroy($id)
-  {
-    //
+      if ($isValidSubscription) {
+        $movie = Movie::find($id);
+        return view('member.movie-watching', ['movie' => $movie]);
+      }
+    }
+
+    return redirect()->route('pricing');
   }
 }

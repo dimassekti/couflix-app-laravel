@@ -122,7 +122,7 @@
          Your Gifts
        </a>
        <div class="flex border-t border-softpur"></div>
-       <a href="dashboard-subscription.html"
+       <a href="{{ route('member.user_premium.index') }}"
           class="side-link">
          <svg width="24"
               height="24"

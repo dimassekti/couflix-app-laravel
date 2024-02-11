@@ -21,7 +21,7 @@
                width="80"
                alt="">
         </div>
-        <a href="watching.html"
+        <a href="{{ route('member.movie.watch', $movie->id) }}"
            class="inset-0 absolute z-50"></a>
       </div>
 
